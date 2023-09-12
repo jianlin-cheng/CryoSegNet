@@ -1,2 +1,2 @@
 # CryoSegNet
-Customized foundational image segmentation models for picking protein particles in cryo-EM images.
+Customized foundational image segmentation model for picking protein particles in cryo-EM images.
