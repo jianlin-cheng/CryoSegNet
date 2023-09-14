@@ -142,5 +142,6 @@ This article is licensed under a Creative Commons Attribution 4.0 International 
 If you use the code or data associated with this research work or otherwise find this data useful, please cite: \
 @article {Gyawali2023, \
 	author = {Gyawali, Rajan and Dhakal, Ashwin and Wang, Liguo and Cheng, Jianlin}, \
-	title = {A large expert-curated cryo-EM image dataset for machine learning protein particle picking}, \
+	title = {CryoSegNet: Cryo-EM protein particles picking with foundational image segmentation model}, \
+    year = {2023}
 }
