@@ -21,9 +21,9 @@ import wandb
 # load the image
 
 
-train_image_path = list(glob.glob(config.train_dataset_path + 'train/images/*.jpg'))[:20]
+train_image_path = list(glob.glob(config.train_dataset_path + 'train/images/*.jpg'))
 
-val_image_path = list(glob.glob(config.train_dataset_path + 'val/images/*.jpg'))[:20]
+val_image_path = list(glob.glob(config.train_dataset_path + 'val/images/*.jpg'))
 
 
 train_ds = CryoEMDataset(img_dir=train_image_path, transform=None)
