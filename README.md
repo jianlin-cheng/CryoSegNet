@@ -11,26 +11,31 @@ Figure below demonstrates the overview of particle picking process used by CryoS
 
 ## Installation
 ```
-# clone project
+### Clone project
+```
 git clone https://github.com/jianlin-cheng/CryoSegNet.git
 cd CryoSegNet/
-
-# download trained models
+```
+### Download trained models
+```
 curl https://calla.rnet.missouri.edu/CryoSegNet/pretrained_models.tar.gz --output pretrained_models.tar.gz
 tar -xvf pretrained_models.tar.gz
 rm pretrained_models.tar.gz
-
-# download training data (if required)
+```
+### Download training data (if required)
+```
 curl https://calla.rnet.missouri.edu/CryoSegNet/train_dataset.tar.gz --output train_dataset.tar.gz
 tar -xvf train_dataset.tar.gz
 rm train_dataset.tar.gz
-
-# download test data
+```
+### Download test data
+```
 curl https://calla.rnet.missouri.edu/CryoSegNet/test_dataset.tar.gz --output test_dataset.tar.gz
 tar -xvf test_dataset.tar.gz
 rm test_dataset.tar.gz
-
-# create conda environment
+```
+### Create conda environment
+```
 conda env create -f environment.yml
 conda activate cryosegnet
 ```
