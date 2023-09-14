@@ -1,4 +1,4 @@
- name: cryosegnet
+name: cryosegnet
 channels:
   - pytorch
   - nvidia
