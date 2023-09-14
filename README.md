@@ -135,7 +135,7 @@ Optional Arguments:
 python utils/evaluation.py
 ```
 
-#### Finding Precision-Recall Curve!
+#### Finding Precision-Recall Curve
 ```
 python utils/precision_recall_curve.py
 ```
