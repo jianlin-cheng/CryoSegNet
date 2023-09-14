@@ -1,4 +1,4 @@
-# Code for calculating precision recall curve
+## Code for calculating precision recall curve
 import copy
 import config
 import matplotlib.pyplot as plt
@@ -83,7 +83,7 @@ precisions_ = []
 recalls_ = []
 for empiar_id in empiar_ids:
     print("[INFO] Loading up test images path ...")
-    images_path = list(glob.glob(f"/bml/Rajan_CryoEM/Processed_Datasets/New_Val/N{empiar_id}/images/*.jpg"))
+    images_path = list(glob.glob(f"{config.test_dataset_path}/{empiar_id}/images/*.jpg"))
 
     
     total_precisions = []

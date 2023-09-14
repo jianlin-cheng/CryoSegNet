@@ -1,4 +1,4 @@
-# Code for generating star file
+## Code for generating star file
 
 from denoise import denoise
 import config
@@ -16,6 +16,7 @@ from tqdm import tqdm
 import mrcfile
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 import statistics as st
+import config
 
 print("[INFO] Loading up model...")
 model = UNET().to(device=config.device)
@@ -99,16 +100,13 @@ def generate_output(model, image_path, star_writer):
             pass
         
 print("[INFO] Loading up Test Micrographs ...")
-images_path = list(glob.glob("/bml/Rajan_CryoEM/Processed_Datasets/New_Val/N10345/images/*.jpg"))
-# images_path = list(glob.glob("/bml/Rajan_CryoEM/Final_Validation_Full_Micrographs/10025/micrographs/*.mrc"))
+images_path = list(glob.glob(f"{config.test_dataset_path}/{config.empiar_id}/images/*.jpg"))
 
 print(f"[INFO] Number of Micrographs = {len(images_path)}\n")
-print("[INFO] Loading the model...")
-file_name = input("\nProvide the file name for storing output in .star format | Example: output.star\n")
 print("[INFO] Generating star file for input Cryo-EM Micrographs...")
 print("[INFO] Generation may take more time depending upon the number of micrographs...\n")
 
-with open(f"{config.output_path}/results/{file_name}", "w") as star_file:
+with open(f"{config.output_path}/star_files/{config.file_name}", "w") as star_file:
     star_writer = csv.writer(star_file, delimiter=' ')
     star_writer.writerow([])
     star_writer.writerow(["data_"])

@@ -1,4 +1,4 @@
-# Configuration file
+## Configuration file
 
 import argparse
 import torch
@@ -48,6 +48,10 @@ architecture_name = "CryoSegNet Model with Batchsize: {}, InputShape: {}, LR {}"
 )
 parser.add_argument("--architecture_name", type=str, default=architecture_name, help="Model architecture name")
 
+# Additional Arguments for prediction
+parser.add_argument("--empiar_id", type=str, default="10081", help="EMPIAR ID for prediction")
+parser.add_argument("--filename", type=str, default="10081.star", help="Filename for picked proteins coordinates")
+
 # Parse the command-line arguments
 args = parser.parse_args()
 
@@ -72,3 +76,5 @@ architecture_name = args.architecture_name
 cryosegnet_checkpoint = args.cryosegnet_checkpoint
 sam_checkpoint = args.sam_checkpoint
 model_type = args.model_type
+empiar_id = args.empiar_id
+filename = args.filename

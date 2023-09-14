@@ -1,4 +1,4 @@
-# Code for training
+## Code for training
 
 from accuracy import dice_score, jaccard_score
 from dataset import CryoEMDataset
@@ -43,7 +43,7 @@ model = UNET().to(config.device)
 # initialize loss function and optimizer
 criterion1 = BCEWithLogitsLoss()
 criterion2 = DiceLoss()
-optimizer = Adam(model.parameters(), lr=config.lr)
+optimizer = Adam(model.parameters(), lr=config.learning_rate)
 
 
 # calculate steps per epoch for training and test set
@@ -58,7 +58,7 @@ print(f"[INFO] Number of Validation Steps : {val_steps}")
 # initialize a dictionary to store training history
 H = {"train_loss": [], "val_loss": [], "train_dice_score": [], "val_dice_score": [], "train_jaccard_score": [], "val_jaccard_score": [], "epochs": []}
 
-if config.log:
+if config.logging:
     # start a new wandb run to track this script
     wandb.init(
         # set the wandb project where this run will be logged
@@ -66,7 +66,7 @@ if config.log:
         
         # track hyperparameters and run metadata
         config={
-        "learning_rate": config.lr,
+        "learning_rate": config.learning_rate,
         "architecture": config.architecture_name,
         "dataset": "Cryo EM Particle Picking Dataset",
         "epochs": config.num_epochs,
@@ -152,7 +152,7 @@ for e in tqdm(range(config.num_epochs)):
     print("Train Loss: {:.4f}, Validation Loss: {:.4f}, Train Dice Score: {:.4f}. Validation Dice Score: {:.4f}, Train Jaccard Score: {:.4f}. Validation Jaccard Score: {:.4f}".format(
     train_loss, val_loss, train_dice_score, val_dice_score, train_jaccard_score, val_jaccard_score))
     
-    if config.log:
+    if config.logging:
         wandb.log({"train_loss": train_loss, "val_loss": val_loss, "train_dice_score": train_dice_score, "val_dice_score": val_dice_score, 
                 "train_jaccard_score": train_jaccard_score, "val_jaccard_score": val_jaccard_score})
     

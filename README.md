@@ -83,13 +83,10 @@ conda activate cryosegnet
 
 ```
 python train.py
-
 ```
 ```
-optional arguments:
+Optional Arguments:
   --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
-  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
-  --output_path (str, default: "output"): Output directory.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --pin_memory (flag): Enable pin_memory for data loading if using CUDA.
   --num_workers (int, default: 8): Number of data loading workers.
@@ -108,75 +105,31 @@ optional arguments:
 Example Usage:
     python train.py --batch_size 12 --learning_rate 0.001 --num_epochs 10 --architecture_name "my_custom_model"
 ```
-
-#### Download trained models
-```
-curl https://calla.rnet.missouri.edu/CryoSegNet/pretrained_models.tar.gz --output pretrained_models.tar.gz
-tar -xvf pretrained_models.tar.gz
-rm pretrained_models.tar.gz
-```
-#### Download training data (if required)
-```
-curl https://calla.rnet.missouri.edu/CryoSegNet/train_dataset.tar.gz --output train_dataset.tar.gz
-tar -xvf train_dataset.tar.gz
-rm train_dataset.tar.gz
-```
-#### Download test data
-```
-curl https://calla.rnet.missouri.edu/CryoSegNet/test_dataset.tar.gz --output test_dataset.tar.gz
-tar -xvf test_dataset.tar.gz
-rm test_dataset.tar.gz
-```
-#### Create conda environment
-```
-conda env create -f environment.yml
-conda activate cryosegnet
-```
-
-
 ## Prediction
-1. To predict protein function with protein structures in the PDB format as input (note: protein sequences are automatically extracted from the PDB files in the input pdb path).
-```
-    python predict.py --data-path path_to_store_intermediate_files --ontology GO_function_category --input-type pdb --pdb-path data/alphafold --output output_file --cut-off probability_threshold
-```
 
-2. To predict protein function with protein sequences in the fasta format and protein structures in the PDB format as input: 
+#### Prediction on Test Data (generate star file)
 ```
-    python predict.py --data-path path_to_store_intermediate_files --ontology GO_function_category --input-type fasta --pdb-path data/alphafold --fasta-path path_to_a_fasta_file --output result.txt --cut-off probability_threshold
+python generate_starfile.py --empiar_id 10081 --filename 10081.star
 ```
-
-3. Full prediction command: 
 ```
-Predict protein functions with TransFun
-
-optional arguments:
-  -h, --help            Help message
-  --data-path DATA_PATH
-                        Path to store intermediate data files
-  --ontology ONTOLOGY   GO function category: cellular_component, molecular_function, biological_process
-  --no-cuda NO_CUDA     Disables CUDA training
-  --batch-size BATCH_SIZE
-                        Batch size
-  --input-type {fasta,pdb}
-                        Input data type: fasta file or PDB files
-  --fasta-path FASTA_PATH
-                        Path to a fasta containing one or more protein sequences
-  --pdb-path PDB_PATH   Path to the directory of one or more protein structure files in the PDB format
-  --cut-off CUT_OFF     Cut-off probability threshold to report function
-  --output OUTPUT       A file to save output. All the predictions are stored in this file
-  
+Optional Arguments:
+  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
+  --filename (str, default="10081.star): Filename for picked proteins coordinates.
 ```
-
-4. An example of predicting cellular component of some proteins: 
+#### Prediction on Test Data (predict proteins on micrographs)
 ```
-    python predict.py --data-path data --ontology cellular_component --input-type pdb --pdb-path test/pdbs/ --output result.txt
+python predict.py --empiar_id 10081
 ```
-
-5. An example of predicting molecular function of some proteins: 
 ```
-    python predict.py --data-path data --ontology molecular_function --input-type pdb --pdb-path test/pdbs/ --output result.txt
+Optional Arguments:
+  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
 ```
-
 -----
 
 ## Rights and Permissions

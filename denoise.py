@@ -1,4 +1,4 @@
-# Code for implementing different different image processing techniques for denoising.
+## Code for implementing different different image processing techniques for denoising.
 
 import numpy as np
 import mrcfile

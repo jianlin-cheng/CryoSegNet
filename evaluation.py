@@ -1,4 +1,4 @@
-# Code for calculating different evaluation metrics like Precision, Recall, F1-Score and Dice Score.
+## Code for calculating different evaluation metrics like Precision, Recall, F1-Score and Dice Score.
 
 import copy
 import config
@@ -89,5 +89,5 @@ def evaluation(model, images_path, empiar_id, threshold):
 empiar_ids = [10028, 10081, 10345, 11056, 10532, 10093, 10017]
 for empiar_id in empiar_ids:
     print("[INFO] Loading up test images path ...")
-    images_path = list(glob.glob(f"/bml/Rajan_CryoEM/Processed_Datasets/New_Val/N{empiar_id}/images/*.jpg"))
+    images_path = list(glob.glob(f"{config.test_dataset_path}/{empiar_id}/images/*.jpg"))
     evaluation(model, images_path, empiar_id, threshold = 0.1)

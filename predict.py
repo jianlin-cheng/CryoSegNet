@@ -1,4 +1,4 @@
-# Code for making predictions on individual micrographs
+## Code for making predictions on individual micrographs
 
 import copy
 from denoise import denoise
@@ -133,8 +133,7 @@ def make_predictions(model, image_path):
             pass
         
 print("[INFO] Loading up test images path ...")
-images_path = list(glob.glob("/bml/Rajan_CryoEM/Processed_Datasets/test_dataset/10345/images/*.jpg"))[:2]
-print(images_path)
+images_path = list(glob.glob(f"{config.test_dataset_path}/{config.empiar_id}/images/*.jpg"))
 
 for i in range(0, len(images_path), 1):
 	make_predictions(model, images_path[i])
