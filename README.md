@@ -84,6 +84,8 @@ conda activate cryosegnet
 ```
 python train.py
 
+```
+```
 optional arguments:
   --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
   --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
