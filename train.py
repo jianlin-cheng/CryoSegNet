@@ -2,7 +2,7 @@
 
 from accuracy import dice_score, jaccard_score
 from dataset import CryoEMDataset
-from model_6_layers import UNET
+from models.model_5_layers import UNET
 import numpy as np
 import config
 import torch
