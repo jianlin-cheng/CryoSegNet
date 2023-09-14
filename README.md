@@ -11,30 +11,30 @@ Figure below demonstrates the overview of particle picking process used by CryoS
 
 ## Installation
 
-### Clone project
+#### Clone project
 ```
 git clone https://github.com/jianlin-cheng/CryoSegNet.git
 cd CryoSegNet/
 ```
-### Download trained models
+#### Download trained models
 ```
 curl https://calla.rnet.missouri.edu/CryoSegNet/pretrained_models.tar.gz --output pretrained_models.tar.gz
 tar -xvf pretrained_models.tar.gz
 rm pretrained_models.tar.gz
 ```
-### Download training data (if required)
+#### Download training data (if required)
 ```
 curl https://calla.rnet.missouri.edu/CryoSegNet/train_dataset.tar.gz --output train_dataset.tar.gz
 tar -xvf train_dataset.tar.gz
 rm train_dataset.tar.gz
 ```
-### Download test data
+#### Download test data
 ```
 curl https://calla.rnet.missouri.edu/CryoSegNet/test_dataset.tar.gz --output test_dataset.tar.gz
 tar -xvf test_dataset.tar.gz
 rm test_dataset.tar.gz
 ```
-### Create conda environment
+#### Create conda environment
 ```
 conda env create -f environment.yml
 conda activate cryosegnet
@@ -81,6 +81,55 @@ conda activate cryosegnet
 
 ## Training (if required)
 
+```
+python train.py
+
+optional arguments:
+  --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
+  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --pin_memory (flag): Enable pin_memory for data loading if using CUDA.
+  --num_workers (int, default: 8): Number of data loading workers.
+  --num_channels (int, default: 1): Number of input channels.
+  --num_classes (int, default: 1): Number of classes.
+  --num_levels (int, default: 3): Number of levels in the model.
+  --learning_rate (float, default: 0.0001): Learning rate.
+  --num_epochs (int, default: 200): Number of training epochs.
+  --batch_size (int, default: 6): Batch size.
+  --input_image_width (int, default: 1024): Input image width.
+  --input_image_height (int, default: 1024): Input image height.
+  --input_shape (int, default: 1024): Input image shape.
+  --logging (flag): Enable logging for wandb.
+  --architecture_name : Model architecture name.
+
+Example Usage:
+    python train.py --batch_size 12 --learning_rate 0.001 --num_epochs 10 --architecture_name "my_custom_model"
+```
+
+#### Download trained models
+```
+curl https://calla.rnet.missouri.edu/CryoSegNet/pretrained_models.tar.gz --output pretrained_models.tar.gz
+tar -xvf pretrained_models.tar.gz
+rm pretrained_models.tar.gz
+```
+#### Download training data (if required)
+```
+curl https://calla.rnet.missouri.edu/CryoSegNet/train_dataset.tar.gz --output train_dataset.tar.gz
+tar -xvf train_dataset.tar.gz
+rm train_dataset.tar.gz
+```
+#### Download test data
+```
+curl https://calla.rnet.missouri.edu/CryoSegNet/test_dataset.tar.gz --output test_dataset.tar.gz
+tar -xvf test_dataset.tar.gz
+rm test_dataset.tar.gz
+```
+#### Create conda environment
+```
+conda env create -f environment.yml
+conda activate cryosegnet
+```
 
 
 ## Prediction
