@@ -1,4 +1,4 @@
-## Code for training
+# Code for training
 
 from accuracy import dice_score, jaccard_score
 from dataset import CryoEMDataset
