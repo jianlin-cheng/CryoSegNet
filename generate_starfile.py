@@ -1,4 +1,4 @@
-# Code for generating star file
+## Code for generating star file
 
 from utils.denoise import denoise
 import config
