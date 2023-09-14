@@ -9,7 +9,7 @@ import cv2
 import csv
 import glob
 import random
-from dataset import transform, min_max
+from dataset.dataset import transform, min_max
 from model_5_layers import UNET
 import config
 from tqdm import tqdm

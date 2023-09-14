@@ -1,4 +1,4 @@
-# UNET model with 6 layers
+## UNET model with 6 layers
  
 import torch
 import torch.nn as nn

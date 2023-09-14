@@ -1,7 +1,7 @@
 # Code for training
 
 from accuracy import dice_score, jaccard_score
-from dataset import CryoEMDataset
+from dataset.dataset import CryoEMDataset
 from models.model_5_layers import UNET
 import numpy as np
 import config
