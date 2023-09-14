@@ -130,6 +130,15 @@ Optional Arguments:
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
 ```
+#### Finding Evaluation Metrics
+```
+python utils/evaluation.py
+```
+
+#### Finding Precision-Recall Curve
+```
+python utils/precision_recall_curve.py
+```
 -----
 
 ## Rights and Permissions
