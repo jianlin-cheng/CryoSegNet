@@ -16,13 +16,15 @@ import mrcfile
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 import statistics as st
 
-DEVICE="cuda:0"
-sam_checkpoint = "sam_vit_h_4b8939.pth"
-model_type = "vit_h"
-sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
-sam.to(device=DEVICE)
+print("[INFO] Loading up model...")
+model = UNET().to(device=config.device)
+state_dict = torch.load(config.cryosegnet_checkpoint)
+model.load_state_dict(state_dict)
 
-mask_generator = SamAutomaticMaskGenerator(sam)
+sam_model = sam_model_registry[config.model_type](checkpoint=config.sam_checkpoint)
+sam_model.to(device=config.device)
+
+mask_generator = SamAutomaticMaskGenerator(sam_model)
 
 def get_annotations(anns):
     if len(anns) == 0:
@@ -59,8 +61,8 @@ def prepare_plot(image, mask, predicted_mask, sam_mask, coords, image_path):
     plt.imshow(coords, cmap='gray')
     path = image_path.split("/")[-1]
     path = path.replace(".jpg", "_result.jpg")
-    plt.savefig(os.path.join("output/validation/results/", path))
-    final_path = os.path.join("output/validation/results/", f'final3__{path}')
+    plt.savefig(os.path.join(f"{config.output_path}/results/", path))
+    final_path = os.path.join(f"{config.output_path}/results/", f'predicted_{path}')
     cv2.imwrite(final_path, coords)
 
 
@@ -80,23 +82,21 @@ def make_predictions(model, image_path):
         height, width = image.shape
         orig_image = copy.deepcopy(image)
         orig_mask = copy.deepcopy(mask)
-        image = cv2.resize(image, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))        
-        mask = cv2.resize(mask, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))
+        image = cv2.resize(image, (config.input_image_width, config.input_image_height))        
+        mask = cv2.resize(mask, (config.input_image_width, config.input_image_height))
         segment_mask = copy.deepcopy(orig_image)
         
         image = torch.from_numpy(image).unsqueeze(0).float()
         image = image / 255.0
-        image = image.to(DEVICE).unsqueeze(0)
+        image = image.to(config.device).unsqueeze(0)
         
         mask = cv2.imread(mask_path, 0)
-        mask = cv2.resize(mask, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))
+        mask = cv2.resize(mask, (config.input_image_width, config.input_image_height))
         
         predicted_mask = model(image)    
      
         predicted_mask = torch.sigmoid(predicted_mask)
-        predicted_mask = predicted_mask.cpu().numpy().reshape(config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT)
-        
-        print("Path | Min Max Mean", predicted_mask.min(), predicted_mask.max(), predicted_mask.mean())
+        predicted_mask = predicted_mask.cpu().numpy().reshape(config.input_image_width, config.input_image_height)
 
         sam_output = np.repeat(transform(predicted_mask)[:,:,None], 3, axis=-1)
         predicted_mask = cv2.resize(predicted_mask, (width, height))
@@ -117,13 +117,13 @@ def make_predictions(model, image_path):
         
             x_ = st.mode([box[2] for box in bboxes])
             y_ = st.mode([box[3] for box in bboxes])
-            d_ = np.sqrt((x_ * width / 1024)**2 + (y_ * height / 1024)**2)
+            d_ = np.sqrt((x_ * width / config.input_image_width)**2 + (y_ * height / config.input_image_height)**2)
             r_ = int(d_//2)
             th = r_ * 0.20
             segment_mask = cv2.cvtColor(segment_mask, cv2.COLOR_GRAY2BGR)
             for b in bboxes:
                 if b[2] < x_ + th and b[2] > x_ - th/3 and b[3] < y_ + th and b[3] > y_ - th/3: 
-                    x_new, y_new = int((b[0] + b[2]/2) / 1024 * width) , int((b[1] + b[3]/2) / 1024 * height)
+                    x_new, y_new = int((b[0] + b[2]/2) / config.input_image_width * width) , int((b[1] + b[3]/2) / config.input_image_height * height)
                     coords = cv2.circle(segment_mask, (x_new, y_new),  r_, (0, 0, 255), 8)
             try:
                 prepare_plot(orig_image, orig_mask, predicted_mask, sam_mask, coords, image_path)
@@ -133,13 +133,8 @@ def make_predictions(model, image_path):
             pass
         
 print("[INFO] Loading up test images path ...")
-images_path = list(glob.glob("/bml/Rajan_CryoEM/Processed_Datasets/New_Train/10406/test/images/FoilHole_3165074_Data_3165619_3165620_20190104_1807-61111.jpg"))
-print("[INFO] Loading up model...")
+images_path = list(glob.glob("/bml/Rajan_CryoEM/Processed_Datasets/test_dataset/10345/images/*.jpg"))[:2]
 print(images_path)
-
-model = UNET().to(DEVICE)
-state_dict = torch.load('output/results_final_model_5_layers_july_29/models/CryoPPP denoised with BCE & Dice Loss Att-UNET 5 layers Batchsize: 6,  InputShape: 1024, LR 0.0001, Server: Daisy Epochs: 120, Date: 2023-07-28.pth')
-model.load_state_dict(state_dict)
 
 for i in range(0, len(images_path), 1):
 	make_predictions(model, images_path[i])

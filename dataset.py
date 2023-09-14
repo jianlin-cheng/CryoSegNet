@@ -46,8 +46,8 @@ class CryoEMDataset(Dataset):
         image = cv2.imread(image_path, 0)
         mask = cv2.imread(mask_path, 0)
         
-        image = cv2.resize(image, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))
-        mask = cv2.resize(mask, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))
+        image = cv2.resize(image, (config.input_image_width, config.input_image_height))
+        mask = cv2.resize(mask, (config.input_image_width, config.input_image_height))
         
         image = torch.from_numpy(image).unsqueeze(0).float()
         mask = torch.from_numpy(mask).unsqueeze(0).float()

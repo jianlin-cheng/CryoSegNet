@@ -17,14 +17,15 @@ import mrcfile
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 import statistics as st
 
-DEVICE = 'cuda:0'
+print("[INFO] Loading up model...")
+model = UNET().to(device=config.device)
+state_dict = torch.load(config.cryosegnet_checkpoint)
+model.load_state_dict(state_dict)
 
-sam_checkpoint = "sam_vit_h_4b8939.pth"
-model_type = "vit_h"
-sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
-sam.to(device=DEVICE)
+sam_model = sam_model_registry[config.model_type](checkpoint=config.sam_checkpoint)
+sam_model.to(device=config.device)
 
-mask_generator = SamAutomaticMaskGenerator(sam)
+mask_generator = SamAutomaticMaskGenerator(sam_model)
 
 def get_annotations(anns):
     if len(anns) == 0:
@@ -50,15 +51,15 @@ def generate_output(model, image_path, star_writer):
         image = cv2.imread(image_path, 0)
         # image = denoise(image_path)
         height, width = image.shape
-        image = cv2.resize(image, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))
+        image = cv2.resize(image, (config.input_image_width, config.input_image_height))
         
         image = torch.from_numpy(image).unsqueeze(0).float()
         image = image / 255.0
-        image = image.to(DEVICE).unsqueeze(0)
+        image = image.to(config.device).unsqueeze(0)
         
         predicted_mask = model(image)       
         predicted_mask = torch.sigmoid(predicted_mask)
-        predicted_mask = predicted_mask.cpu().numpy().reshape(config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT)
+        predicted_mask = predicted_mask.cpu().numpy().reshape(config.input_image_width, config.input_image_height)
         predicted_mask = np.rot90(predicted_mask, k=3)
         predicted_mask = predicted_mask.T
                 
@@ -73,14 +74,14 @@ def generate_output(model, image_path, star_writer):
         
         bboxes = {"bbox": [], "iou": []}
         for i in range(0, len(masks)):
-            # if masks[i]["predicted_iou"] > 0.94:
+            if masks[i]["predicted_iou"] > 0.94:
                 bboxes["bbox"].append(masks[i]["bbox"])
                 bboxes["iou"].append(masks[i]["predicted_iou"])
         
         if len(bboxes) > 1:
             x_ = st.mode([box[2] for box in bboxes["bbox"]])
             y_ = st.mode([box[3] for box in bboxes["bbox"]])
-            d_ = np.sqrt((x_ * width / 1024)**2 + (y_ * height / 1024)**2)
+            d_ = np.sqrt((x_ * width / config.input_image_width)**2 + (y_ * height / config.input_image_height)**2)
             r_ = int(d_//2)
             th = r_ * 0.2     
 
@@ -88,7 +89,7 @@ def generate_output(model, image_path, star_writer):
             for i in range(len(bboxes["bbox"])):
                 box, iou = bboxes["bbox"][i], bboxes["iou"][i] 
                 if box[2] < x_ + th and box[2] > x_ - th/3 and box[3] < y_ + th and box[3] > y_ - th/3:                 
-                    x_new, y_new = int((box[0] + box[2]/2) / 1024 * width) , int((box[1] + box[3]/2) / 1024 * height)
+                    x_new, y_new = int((box[0] + box[2]/2) / config.input_image_width * width) , int((box[1] + box[3]/2) / config.input_image_height * height)
                     star_writer.writerow([filename, x_new, y_new, 2*r_]) 
                     if iou > 0.99:
                         star_writer.writerow([filename, x_new + random.randint(0, int(th/2)), y_new + random.randint(0, int(th/2)), 2*r_])   
@@ -107,11 +108,7 @@ file_name = input("\nProvide the file name for storing output in .star format | 
 print("[INFO] Generating star file for input Cryo-EM Micrographs...")
 print("[INFO] Generation may take more time depending upon the number of micrographs...\n")
 
-model = UNET().to(DEVICE)
-state_dict = torch.load('output/results_final_model_5_layers_july_29/models/CryoPPP denoised with BCE & Dice Loss Att-UNET 5 layers Batchsize: 6,  InputShape: 1024, LR 0.0001, Server: Daisy Epochs: 120, Date: 2023-07-28.pth')
-model.load_state_dict(state_dict)
-
-with open(file_name, "w") as star_file:
+with open(f"{config.output_path}/results/{file_name}", "w") as star_file:
     star_writer = csv.writer(star_file, delimiter=' ')
     star_writer.writerow([])
     star_writer.writerow(["data_"])

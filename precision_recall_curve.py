@@ -11,7 +11,10 @@ from model_5_layers import UNET
 import config
 import mrcfile
 
-DEVICE="cuda:0"
+print("[INFO] Loading up model...")
+model = UNET().to(device=config.device)
+state_dict = torch.load(config.cryosegnet_checkpoint)
+model.load_state_dict(state_dict)
 
 def plot_precision_recall(recalls, precisions, empiar_ids):
     title_ = f'Precision-Recall Curve'
@@ -25,7 +28,7 @@ def plot_precision_recall(recalls, precisions, empiar_ids):
     plt.grid(True)    
     plt.xlim([0, 1])
     plt.ylim([0, 1])
-    plt.savefig(os.path.join("output/", title_ + '_100_points.png'))
+    plt.savefig(os.path.join(config.output_path, title_ + '_.png'))
 
 
 def calculate_precision_recall(model, image_path):
@@ -40,13 +43,13 @@ def calculate_precision_recall(model, image_path):
         image = cv2.imread(image_path, 0)
         mask = cv2.imread(mask_path, 0)
         
-        image = cv2.resize(image, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))        
-        mask = cv2.resize(mask, (config.INPUT_IMAGE_WIDTH, config.INPUT_IMAGE_HEIGHT))
+        image = cv2.resize(image, (config.input_image_width, config.input_image_height))        
+        mask = cv2.resize(mask, (config.input_image_width, config.input_image_height))
         mask = mask/255
         
         image = torch.from_numpy(image).unsqueeze(0).float()
         image = image / 255.0
-        image = image.to(DEVICE).unsqueeze(0)
+        image = image.to(config.device).unsqueeze(0)
         
         predicted_mask = model(image)         
         predicted_mask = torch.sigmoid(predicted_mask)
@@ -74,10 +77,6 @@ def calculate_precision_recall(model, image_path):
             recalls.append(recall)
              
         return precisions, recalls
-
-model = UNET().to(DEVICE)
-state_dict = torch.load('output/results_final_model_5_layers_july_29/models/CryoPPP denoised with BCE & Dice Loss Att-UNET 5 layers Batchsize: 6,  InputShape: 1024, LR 0.0001, Server: Daisy Epochs: 120, Date: 2023-07-28.pth')
-model.load_state_dict(state_dict)
 
 empiar_ids = [10028, 10081, 10345, 11056, 10532, 10093, 10017]
 precisions_ = []

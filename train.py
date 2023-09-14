@@ -4,7 +4,7 @@ from accuracy import dice_score, jaccard_score
 from dataset import CryoEMDataset
 from model_6_layers import UNET
 import numpy as np
-from config import *
+import config
 import torch
 import torch.nn as nn
 from torch.nn import BCEWithLogitsLoss
@@ -21,9 +21,9 @@ import wandb
 # load the image
 
 
-train_image_path = list(glob.glob(DATASET_PATH + 'train/images/*.jpg'))
+train_image_path = list(glob.glob(config.train_dataset_path + 'train/images/*.jpg'))[:20]
 
-val_image_path = list(glob.glob(DATASET_PATH + 'test/images/*.jpg'))
+val_image_path = list(glob.glob(config.train_dataset_path + 'val/images/*.jpg'))[:20]
 
 
 train_ds = CryoEMDataset(img_dir=train_image_path, transform=None)
@@ -32,44 +32,44 @@ val_ds = CryoEMDataset(img_dir=val_image_path, transform=None)
 print(f"[INFO] Found {len(train_ds)} examples in the training set...")
 print(f"[INFO] Found {len(val_ds)} examples in the validation set...")
 
-train_loader = DataLoader(train_ds, shuffle=True, batch_size=BATCH_SIZE, pin_memory=PIN_MEMORY, num_workers=NUM_WORKERS)
-val_loader = DataLoader(val_ds, shuffle=True, batch_size=BATCH_SIZE, pin_memory=PIN_MEMORY, num_workers=NUM_WORKERS)
+train_loader = DataLoader(train_ds, shuffle=True, batch_size=config.batch_size, pin_memory=config.pin_memory, num_workers=config.num_workers)
+val_loader = DataLoader(val_ds, shuffle=True, batch_size=config.batch_size, pin_memory=config.pin_memory, num_workers=config.num_workers)
 print(f"[INFO] Train Loader Length {len(train_loader)}...")
 
 # initialize our UNet model
-model = UNET().to(DEVICE)
+model = UNET().to(config.device)
 
 
 # initialize loss function and optimizer
 criterion1 = BCEWithLogitsLoss()
 criterion2 = DiceLoss()
-optimizer = Adam(model.parameters(), lr=LR)
+optimizer = Adam(model.parameters(), lr=config.lr)
 
 
 # calculate steps per epoch for training and test set
-train_steps = len(train_ds) // BATCH_SIZE
-val_steps = len(val_ds) // BATCH_SIZE
+train_steps = len(train_ds) // config.batch_size
+val_steps = len(val_ds) // config.batch_size
 total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 print(f"[INFO] Number of Training Steps : {train_steps}")
 print(f"[INFO] Number of Validation Steps : {val_steps}")
-print(f"[INFO] Total Number of Parameters : {total_params}")
+#print(f"[INFO] Total Number of Parameters : {total_params}")
 
 # initialize a dictionary to store training history
 H = {"train_loss": [], "val_loss": [], "train_dice_score": [], "val_dice_score": [], "train_jaccard_score": [], "val_jaccard_score": [], "epochs": []}
 
-if LOG:
+if config.log:
     # start a new wandb run to track this script
     wandb.init(
         # set the wandb project where this run will be logged
-        project="CryoEM-Model", name = ARCHITECTURE_NAME + " Date: " + str(datetime.today()),
+        project="CryoEM-Model", name = config.architecture_name + " Date: " + str(datetime.today()),
         
         # track hyperparameters and run metadata
         config={
-        "learning_rate": LR,
-        "architecture": ARCHITECTURE_NAME,
+        "learning_rate": config.lr,
+        "architecture": config.architecture_name,
         "dataset": "Cryo EM Particle Picking Dataset",
-        "epochs": NUM_EPOCHS,
+        "epochs": config.num_epochs,
         }
     )
 
@@ -77,7 +77,7 @@ if LOG:
 # loop over epochs
 print("[INFO] Training the network...")
 start_time = time.time()
-for e in tqdm(range(NUM_EPOCHS)):
+for e in tqdm(range(config.num_epochs)):
     model.train()
     
     train_loss = 0
@@ -87,7 +87,7 @@ for e in tqdm(range(NUM_EPOCHS)):
 
     for i, data in enumerate(train_loader):
         x, y = data
-        x, y = x.to(DEVICE), y.to(DEVICE)
+        x, y = x.to(config.device), y.to(config.device)
 
         optimizer.zero_grad()
         
@@ -118,7 +118,7 @@ for e in tqdm(range(NUM_EPOCHS)):
     with torch.no_grad(): 
         for i, data in enumerate(val_loader):
             x, y = data
-            x, y = x.to(DEVICE), y.to(DEVICE)
+            x, y = x.to(config.device), y.to(config.device)
             
             
             pred = model(x)
@@ -148,18 +148,18 @@ for e in tqdm(range(NUM_EPOCHS)):
     H["epochs"].append(e + 1)
     
     # print the model training and validation information
-    print("[INFO] EPOCH: {}/{}".format(e + 1, NUM_EPOCHS))
+    print("[INFO] EPOCH: {}/{}".format(e + 1, config.num_epochs))
     print("Train Loss: {:.4f}, Validation Loss: {:.4f}, Train Dice Score: {:.4f}. Validation Dice Score: {:.4f}, Train Jaccard Score: {:.4f}. Validation Jaccard Score: {:.4f}".format(
     train_loss, val_loss, train_dice_score, val_dice_score, train_jaccard_score, val_jaccard_score))
     
-    if LOG:
+    if config.log:
         wandb.log({"train_loss": train_loss, "val_loss": val_loss, "train_dice_score": train_dice_score, "val_dice_score": val_dice_score, 
                 "train_jaccard_score": train_jaccard_score, "val_jaccard_score": val_jaccard_score})
     
     # serialize the model to disk
     if e % 5 == 0:
-        MODEL_PATH = ARCHITECTURE_NAME + " Epochs: {}, Date: {}.pth".format(e, date.today())
-        torch.save(model.state_dict(), os.path.join(BASE_OUTPUT, MODEL_PATH))
+        MODEL_PATH = config.architecture_name + " Epochs: {}, Date: {}.pth".format(e, date.today())
+        torch.save(model.state_dict(), os.path.join(f"{config.output_path}/models/", MODEL_PATH))
 
 # display the total time needed to perform the training
 end_time = time.time()
