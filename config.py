@@ -39,6 +39,9 @@ parser.add_argument("--cryosegnet_checkpoint", type=str, default="pretrained_mod
 parser.add_argument("--sam_checkpoint", type=str, default="pretrained_models/sam_vit_h_4b8939.pth", help="Path to SAM checkpoint")
 parser.add_argument("--model_type", type=str, default="vit_h", help="SAM Model type")
 
+# Additional Arguments for prediction
+parser.add_argument("--empiar_id", type=int, default=10081, help="EMPIAR ID for prediction")
+parser.add_argument("--file_name", type=str, default="10081.star", help="Filename for picked proteins coordinates")
 
 # Additional info in architecture name
 architecture_name = "CryoSegNet Model with Batchsize: {}, InputShape: {}, LR {}".format(
@@ -47,10 +50,6 @@ architecture_name = "CryoSegNet Model with Batchsize: {}, InputShape: {}, LR {}"
     parser.parse_args().learning_rate
 )
 parser.add_argument("--architecture_name", type=str, default=architecture_name, help="Model architecture name")
-
-# Additional Arguments for prediction
-parser.add_argument("--empiar_id", type=str, default="10081", help="EMPIAR ID for prediction")
-parser.add_argument("--filename", type=str, default="10081.star", help="Filename for picked proteins coordinates")
 
 # Parse the command-line arguments
 args = parser.parse_args()
@@ -77,4 +76,4 @@ cryosegnet_checkpoint = args.cryosegnet_checkpoint
 sam_checkpoint = args.sam_checkpoint
 model_type = args.model_type
 empiar_id = args.empiar_id
-filename = args.filename
+file_name = args.file_name
