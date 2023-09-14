@@ -10,7 +10,7 @@ Figure below demonstrates the overview of particle picking process used by CryoS
 ![Alt text](<assets/General Outline.jpeg>)
 
 ## Installation
-```
+
 ### Clone project
 ```
 git clone https://github.com/jianlin-cheng/CryoSegNet.git
