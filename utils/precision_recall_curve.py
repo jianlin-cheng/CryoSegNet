@@ -1,4 +1,4 @@
-## Code for calculating precision recall curve
+# Code for calculating precision recall curve
 import copy
 import config
 import matplotlib.pyplot as plt
