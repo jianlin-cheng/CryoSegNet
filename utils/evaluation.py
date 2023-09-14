@@ -1,5 +1,10 @@
 # Code for calculating different evaluation metrics like Precision, Recall, F1-Score and Dice Score.
 
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 import copy
 import config
 import numpy as np
