@@ -1,4 +1,4 @@
-## Code for calculating different evaluation metrics like Precision, Recall, F1-Score and Dice Score.
+# Code for calculating different evaluation metrics like Precision, Recall, F1-Score and Dice Score.
 
 import copy
 import config
