@@ -1,4 +1,4 @@
-# Code for making predictions on individual micrographs
+## Code for making predictions on individual micrographs
 
 import copy
 from utils.denoise import denoise
