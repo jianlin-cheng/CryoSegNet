@@ -1,6 +1,6 @@
 # Code for training
 
-from accuracy import dice_score, jaccard_score
+from utils.accuracy import dice_score, jaccard_score
 from dataset.dataset import CryoEMDataset
 from models.model_5_layers import UNET
 import numpy as np
@@ -11,7 +11,7 @@ from torch.nn import BCEWithLogitsLoss
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
-from loss import DiceLoss
+from utils.loss import DiceLoss
 import glob
 from tqdm import tqdm
 import time

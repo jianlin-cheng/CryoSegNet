@@ -1,7 +1,7 @@
 # Code for making predictions on individual micrographs
 
 import copy
-from denoise import denoise
+from utils.denoise import denoise
 import config
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +10,7 @@ import cv2
 import glob
 import os
 from dataset.dataset import transform
-from model_5_layers import UNET
+from models.model_5_layers import UNET
 import config
 import mrcfile
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry

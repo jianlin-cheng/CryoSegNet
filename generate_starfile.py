@@ -1,6 +1,6 @@
 # Code for generating star file
 
-from denoise import denoise
+from utils.denoise import denoise
 import config
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +10,7 @@ import csv
 import glob
 import random
 from dataset.dataset import transform, min_max
-from model_5_layers import UNET
+from models.model_5_layers import UNET
 import config
 from tqdm import tqdm
 import mrcfile

@@ -7,7 +7,7 @@ import torch
 import cv2
 import glob
 import os
-from model_5_layers import UNET
+from models.model_5_layers import UNET
 import config
 import mrcfile
 
