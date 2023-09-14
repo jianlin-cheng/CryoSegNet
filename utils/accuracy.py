@@ -1,4 +1,4 @@
-## Code for calculating dice score and jaccard score
+# Code for calculating dice score and jaccard score
 
 def dice_score(target, pred):    
     smooth = 0.0001
