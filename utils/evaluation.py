@@ -65,7 +65,7 @@ def evaluation_metrics(model, image_path, threshold):
              
         return precision, recall, dice_score
 
-def evaluation(model, images_path, empiar_id, threshold):
+def evaluation(model, images_path, empiar_id, threshold=0.001):
     total_precisions = []
     total_recalls = []
     total_dice_scores = []
@@ -95,4 +95,4 @@ empiar_ids = [10028, 10081, 10345, 11056, 10532, 10093, 10017]
 for empiar_id in empiar_ids:
     print("[INFO] Loading up test images path ...")
     images_path = list(glob.glob(f"{config.test_dataset_path}/{empiar_id}/images/*.jpg"))
-    evaluation(model, images_path, empiar_id, threshold = 0.1)
+    evaluation(model, images_path, empiar_id)
