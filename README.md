@@ -7,7 +7,7 @@ CryoSegNet is a method using foundational image segmentation model for picking p
 ## Overview
 Figure below demonstrates the overview of particle picking process used by CryoSegNet.
 
-![Alt text](<assets/General Outline.jpeg>)
+![Alt text](<assets/General Outline>)
 
 ## Installation
 
