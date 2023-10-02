@@ -65,7 +65,7 @@ def evaluation_metrics(model, image_path, threshold):
              
         return precision, recall, dice_score
 
-def evaluation(model, images_path, empiar_id, threshold=0.001):
+def evaluation(model, images_path, empiar_id, threshold=0.1):
     total_precisions = []
     total_recalls = []
     total_dice_scores = []
