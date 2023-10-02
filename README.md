@@ -1,6 +1,6 @@
 # CryoSegNet: Accurate cryo-EM protein particle picking by integrating the foundational AI image segmentation model and specialized U-Net 
 
-CryoSegNet is a method using foundational image segmentation model for picking protein particles in cryo-EM micrographs. It is trained on 22 different protein types including membrane protein, signaling protein, transport protein, viral protein, ribosomes, etc. It uses UNET and SAM's automatic mask generator for predicting the protein particles coordinates from the cryo-EM micrographs and generates output in the form of .star file which can be used in popular tools like RELION and CryoSPARC for generating 3D density maps. It has achieved the state-of-the-art performance and has surpassed the popular AI pickers like crYOLO and Topaz.
+CryoSegNet is a method using foundational image segmentation model for picking protein particles in cryo-EM micrographs. It is trained on 22 different protein types including membrane protein, signaling protein, transport protein, viral protein, ribosomes, etc. It uses U-Net and SAM's automatic mask generator for predicting the protein particles coordinates from the cryo-EM micrographs and generates output in the form of .star file which can be used in popular tools like RELION and CryoSPARC for generating 3D density maps. It has achieved the state-of-the-art performance and has surpassed the popular AI pickers like crYOLO and Topaz.
 
 -----
 
