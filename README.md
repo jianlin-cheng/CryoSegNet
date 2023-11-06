@@ -117,7 +117,7 @@ Optional Arguments:
   --output_path (str, default: "output"): Output directory.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
-  --filename (str, default="10081.star): Filename for picked proteins coordinates.
+  --file_name (str, default="10081.star): Filename for picked proteins coordinates.
 ```
 #### Prediction on Test Data (predict proteins on micrographs)
 ```
@@ -140,7 +140,7 @@ Optional Arguments:
   --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
   --output_path (str, default: "output"): Output directory.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
-  --filename (str, default="abc.star): Filename for picked proteins coordinates.
+  --file_name (str, default="abc.star): Filename for picked proteins coordinates.
 ```
 -----
 
