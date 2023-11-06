@@ -58,6 +58,7 @@ args = parser.parse_args()
 # Access the parsed arguments
 train_dataset_path = args.train_dataset_path
 test_dataset_path = args.test_dataset_path
+my_dataset_path = args.my_dataset_path
 output_path = args.output_path
 device = args.device
 pin_memory = args.pin_memory
