@@ -109,7 +109,7 @@ Example Usage:
 
 #### Prediction on Test Data (generate star file)
 ```
-python generate_starfile.py --empiar_id 10081 --filename 10081.star
+python generate_starfile.py --empiar_id 10081 --file_name 10081.star
 ```
 ```
 Optional Arguments:
@@ -132,7 +132,7 @@ Optional Arguments:
 ```
 #### Prediction on your own Data (generate star file)
 ```
-python generate_starfile_new_data.py --filename abc.star
+python generate_starfile_new_data.py --file_name abc.star
 ```
 ** Place all your mrc files inside a folder name `my_dataset`
 ```
