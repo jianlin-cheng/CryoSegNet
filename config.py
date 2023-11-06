@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser(description="CryoSegNet Training")
 # Add arguments
 parser.add_argument("--train_dataset_path", type=str, default="train_dataset/*/", help="Path to the training dataset")
 parser.add_argument("--test_dataset_path", type=str, default="test_dataset", help="Path to the test dataset")
+parser.add_argument("--my_dataset_path", type=str, default="my_dataset", help="Path to your own dataset")
 parser.add_argument("--output_path", type=str, default="output", help="Output directory")
 
 # Device-related arguments

@@ -100,7 +100,7 @@ def generate_output(model, image_path, star_writer):
             pass
         
 print("[INFO] Loading up Test Micrographs ...")
-images_path = list(glob.glob(f"{config.test_dataset_path}/*.mrc"))
+images_path = list(glob.glob(f"{config.my_dataset_path}/*.mrc"))
 
 print(f"[INFO] Number of Micrographs = {len(images_path)}\n")
 print("[INFO] Generating star file for input Cryo-EM Micrographs...")

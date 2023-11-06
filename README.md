@@ -130,6 +130,18 @@ Optional Arguments:
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
 ```
+#### Prediction on your own Data (generate star file)
+```
+python generate_starfile_new_data.py --filename abc.star
+```
+** Place all your mrc files inside a folder name `my_dataset`
+```
+Optional Arguments:
+  --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --filename (str, default="abc.star): Filename for picked proteins coordinates.
+```
 -----
 
 ## Rights and Permissions
