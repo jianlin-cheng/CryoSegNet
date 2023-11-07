@@ -49,8 +49,9 @@ def generate_output(model, image_path, star_writer):
     model.eval()
     # turn off gradient tracking
     with torch.no_grad():
-        # image = cv2.imread(image_path, 0)
-        image = denoise(image_path)
+        
+        image = cv2.imread(image_path, 0)
+        #image = denoise(image_path)
         height, width = image.shape
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))
         
@@ -100,7 +101,7 @@ def generate_output(model, image_path, star_writer):
             pass
         
 print("[INFO] Loading up Test Micrographs ...")
-images_path = list(glob.glob(f"{config.my_dataset_path}/*.mrc"))
+images_path = list(glob.glob(f"{config.my_dataset_path}/*.jpg"))
 
 print(f"[INFO] Number of Micrographs = {len(images_path)}\n")
 print("[INFO] Generating star file for input Cryo-EM Micrographs...")
