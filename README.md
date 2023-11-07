@@ -105,9 +105,10 @@ Optional Arguments:
 Example Usage:
     python train.py --batch_size 12 --learning_rate 0.001 --num_epochs 10 --architecture_name "my_custom_model"
 ```
-## Prediction
+## Prediction on Provided Test Data
 
 #### Prediction on Test Data (generate star file for usage in tools like CryoSPARC)
+This function generates output in the form of .star file which can be utilized in tools like CryoSPARC for further steps like selecting the 2D classes, 3D reconstruction and so on.
 ```
 python generate_starfile.py --empiar_id 10081 --file_name 10081.star
 ```
@@ -120,6 +121,7 @@ Optional Arguments:
   --file_name (str, default="10081.star): Filename for picked proteins coordinates.
 ```
 #### Prediction on Test Data (predict proteins on micrographs)
+This function outputs micrographs with predicted proteins represented by circles.
 ```
 python predict.py --empiar_id 10081
 ```
@@ -130,6 +132,9 @@ Optional Arguments:
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
 ```
+
+## Prediction on Your Own Data
+
 #### Prediction on your own Data (generate star file for usage in tools like CryoSPARC)
 For jpg files:
 ```
