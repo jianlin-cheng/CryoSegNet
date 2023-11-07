@@ -105,7 +105,7 @@ Optional Arguments:
 Example Usage:
     python train.py --batch_size 12 --learning_rate 0.001 --num_epochs 10 --architecture_name "my_custom_model"
 ```
-## Prediction on Provided Test Data
+## Prediction on EMPIAR Test Data (available in directory test_dataset)
 
 #### Prediction on Test Data (generate star file for usage in tools like CryoSPARC)
 This function generates output in the form of .star file which can be utilized in tools like CryoSPARC for further steps like selecting the 2D classes, 3D reconstruction and so on.
@@ -136,15 +136,16 @@ Optional Arguments:
 ## Prediction on Your Own Data
 
 #### Prediction on your own Data (generate star file for usage in tools like CryoSPARC)
-For jpg files:
+This section allows you to pick protein particles and generate .star file which can be used in tools like CryoSPARC for further post-processing.
+
+If you have your own dataset available in .jpg format, place them under the directory `my_dataset` and run:
 ```
 python generate_starfile_new_data_jpg.py --file_name abc.star
 ```
-For mrc files:
+If you have your own dataset available in .mrc format, place them under the directory `my_dataset` and run:
 ```
 python generate_starfile_new_data_mrc.py --file_name abc.star
 ```
-Place all your micrographs inside a folder name `my_dataset`
 ```
 Optional Arguments:
   --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
@@ -154,15 +155,16 @@ Optional Arguments:
 ```
 
 #### Prediction on your own Data (predict proteins on micrographs)
-For jpg files:
+This section allows you to pick protein particles and represent them by circles in the micrographs.
+
+If you have your own dataset available in .jpg format, place them under the directory `my_dataset` and run:
 ```
 python predict_new_data_jpg.py
 ```
-For mrc files:
+If you have your own dataset available in .mrc format, place them under the directory `my_dataset` and run:
 ```
 python predict_new_data_mrc.py
 ```
-Place all your micrographs inside a folder name `my_dataset`
 ```
 Optional Arguments:
   --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
