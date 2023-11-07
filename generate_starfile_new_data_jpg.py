@@ -52,7 +52,6 @@ def generate_output(model, image_path, star_writer):
         
         image = cv2.imread(image_path, 0)
         image = denoise_jpg_image(image)
-        #image = denoise(image_path)
         height, width = image.shape
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))
         

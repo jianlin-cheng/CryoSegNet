@@ -131,8 +131,13 @@ Optional Arguments:
   --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
 ```
 #### Prediction on your own Data (generate star file for usage in tools like CryoSPARC)
+For jpg files:
 ```
-python generate_starfile_new_data.py --file_name abc.star
+python generate_starfile_new_data_jpg.py --file_name abc.star
+```
+For mrc files:
+```
+python generate_starfile_new_data_mrc.py --file_name abc.star
 ```
 Place all your micrographs inside a folder name `my_dataset`
 ```
@@ -144,8 +149,13 @@ Optional Arguments:
 ```
 
 #### Prediction on your own Data (predict proteins on micrographs)
+For jpg files:
 ```
-python predict_new_data.py
+python predict_new_data_jpg.py
+```
+For mrc files:
+```
+python predict_new_data_mrc.py
 ```
 Place all your micrographs inside a folder name `my_dataset`
 ```
