@@ -1,7 +1,7 @@
 # Code for making predictions on individual micrographs
 
 import copy
-from utils.denoise import denoise
+from utils.denoise import denoise, denoise_jpg_image
 import config
 import matplotlib.pyplot as plt
 import numpy as np
@@ -58,7 +58,7 @@ def prepare_plot(image, predicted_mask, sam_mask, coords, image_path):
     plt.imshow(coords, cmap='gray')
     path = image_path.split("/")[-1]
     path = path.replace(".jpg", "_result.jpg")
-    plt.savefig(os.path.join(f"{config.output_path}/results/", path))
+    #plt.savefig(os.path.join(f"{config.output_path}/results/", path))
     final_path = os.path.join(f"{config.output_path}/results/", f'predicted_{path}')
     cv2.imwrite(final_path, coords)
 
@@ -73,6 +73,7 @@ def make_predictions(model, image_path):
         # image = image.T
         # image = np.rot90(image)
         image = cv2.imread(image_path, 0)
+        image = denoise_jpg_image(image)
         height, width = image.shape
         orig_image = copy.deepcopy(image)
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))    

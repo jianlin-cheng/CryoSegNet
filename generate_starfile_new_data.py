@@ -1,6 +1,6 @@
 # Code for generating star file
 
-from utils.denoise import denoise
+from utils.denoise import denoise, denoise_jpg_image
 import config
 import matplotlib.pyplot as plt
 import numpy as np
@@ -51,6 +51,7 @@ def generate_output(model, image_path, star_writer):
     with torch.no_grad():
         
         image = cv2.imread(image_path, 0)
+        image = denoise_jpg_image(image)
         #image = denoise(image_path)
         height, width = image.shape
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))
@@ -92,10 +93,10 @@ def generate_output(model, image_path, star_writer):
                 box, iou = bboxes["bbox"][i], bboxes["iou"][i] 
                 if box[2] < x_ + th and box[2] > x_ - th/3 and box[3] < y_ + th and box[3] > y_ - th/3:                 
                     x_new, y_new = int((box[0] + box[2]/2) / config.input_image_width * width) , int((box[1] + box[3]/2) / config.input_image_height * height)
-                    star_writer.writerow([filename, x_new, y_new, 2*r_, iou]) 
+                    star_writer.writerow([filename, x_new, y_new, 2*r_]) 
                     if iou > 0.99:
-                        star_writer.writerow([filename, x_new + random.randint(0, int(th/2)), y_new + random.randint(0, int(th/2)), 2*r_, iou])   
-                        star_writer.writerow([filename, x_new + random.randint(-int(th/2), 0), y_new + random.randint(-int(th/2), 0), 2*r_, iou])            
+                        star_writer.writerow([filename, x_new + random.randint(0, int(th/2)), y_new + random.randint(0, int(th/2)), 2*r_])   
+                        star_writer.writerow([filename, x_new + random.randint(-int(th/2), 0), y_new + random.randint(-int(th/2), 0), 2*r_])            
                                                                                                                                                                      
         else:
             pass
@@ -117,7 +118,6 @@ with open(f"{config.output_path}/star_files/{config.file_name}", "w") as star_fi
     star_writer.writerow(["_rlnCoordinateX", "#2"])
     star_writer.writerow(["_rlnCoordinateY", "#3"])
     star_writer.writerow(["_rlnDiameter", "#4"])
-    star_writer.writerow(["_rlnConfidenceScore", "#5"])
 
     for i in tqdm(range(0, len(images_path), 1)):
         generate_output(model, images_path[i], star_writer)

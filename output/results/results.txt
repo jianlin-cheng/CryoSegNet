@@ -1,1 +1,1 @@
-Location to store star files.
+Location to store predicted micrographs

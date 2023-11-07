@@ -94,5 +94,12 @@ def denoise(image_path):
     return guided_filter_image
 
     
+def denoise_jpg_image(image):
+    normalized_image = standard_scaler(np.array(image))
+    contrast_enhanced_image = contrast_enhancement(normalized_image)
+    weiner_filtered_image = wiener_filter(contrast_enhanced_image, kernel, K = 30)
+    clahe_image = clahe(weiner_filtered_image)
+    guided_filter_image = guided_filter(clahe_image, weiner_filtered_image)
     
+    return guided_filter_image 
     
