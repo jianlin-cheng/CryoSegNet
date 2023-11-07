@@ -107,7 +107,7 @@ Example Usage:
 ```
 ## Prediction
 
-#### Prediction on Test Data (generate star file)
+#### Prediction on Test Data (generate star file for usage in tools like CryoSPARC)
 ```
 python generate_starfile.py --empiar_id 10081 --file_name 10081.star
 ```
@@ -130,17 +130,29 @@ Optional Arguments:
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
 ```
-#### Prediction on your own Data (generate star file)
+#### Prediction on your own Data (generate star file for usage in tools like CryoSPARC)
 ```
 python generate_starfile_new_data.py --file_name abc.star
 ```
-** Place all your mrc files inside a folder name `my_dataset`
+Place all your micrographs inside a folder name `my_dataset`
 ```
 Optional Arguments:
   --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
   --output_path (str, default: "output"): Output directory.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --file_name (str, default="abc.star): Filename for picked proteins coordinates.
+```
+
+#### Prediction on your own Data (predict proteins on micrographs)
+```
+python predict_new_data.py
+```
+Place all your micrographs inside a folder name `my_dataset`
+```
+Optional Arguments:
+  --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
 ```
 -----
 
