@@ -79,60 +79,6 @@ conda activate cryosegnet
 | 7      | 11056         | Transport Protein       | (5760,4092)             | 88.94                            | 305              |   
 | Total  |               |                         |                         |                                  | 1879             |   
 
-## Training (if required)
-
-```
-python train.py
-```
-```
-Optional Arguments:
-  --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
-  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
-  --pin_memory (flag): Enable pin_memory for data loading if using CUDA.
-  --num_workers (int, default: 8): Number of data loading workers.
-  --num_channels (int, default: 1): Number of input channels.
-  --num_classes (int, default: 1): Number of classes.
-  --num_levels (int, default: 3): Number of levels in the model.
-  --learning_rate (float, default: 0.0001): Learning rate.
-  --num_epochs (int, default: 200): Number of training epochs.
-  --batch_size (int, default: 6): Batch size.
-  --input_image_width (int, default: 1024): Input image width.
-  --input_image_height (int, default: 1024): Input image height.
-  --input_shape (int, default: 1024): Input image shape.
-  --logging (flag): Enable logging for wandb.
-  --architecture_name : Model architecture name.
-
-Example Usage:
-    python train.py --batch_size 12 --learning_rate 0.001 --num_epochs 10 --architecture_name "my_custom_model"
-```
-## Prediction on EMPIAR Test Data (available in directory test_dataset)
-
-#### Prediction on Test Data (generate star file for usage in tools like CryoSPARC)
-This function generates output in the form of .star file which can be utilized in tools like CryoSPARC for further steps like selecting the 2D classes, 3D reconstruction and so on.
-```
-python generate_starfile.py --empiar_id 10081 --file_name 10081.star
-```
-```
-Optional Arguments:
-  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
-  --output_path (str, default: "output"): Output directory.
-  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
-  --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
-  --file_name (str, default="10081.star): Filename for picked proteins coordinates.
-```
-#### Prediction on Test Data (predict proteins on micrographs)
-This function outputs micrographs with predicted proteins represented by circles.
-```
-python predict.py --empiar_id 10081
-```
-```
-Optional Arguments:
-  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
-  --output_path (str, default: "output"): Output directory.
-  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
-  --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
-```
-
 ## Prediction on Your Own Data
 
 #### Prediction on your own Data (generate star file for usage in tools like CryoSPARC)
@@ -170,6 +116,61 @@ Optional Arguments:
   --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
   --output_path (str, default: "output"): Output directory.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+```
+
+## Prediction on EMPIAR Test Data (available in directory test_dataset)
+
+#### Prediction on Test Data (generate star file for usage in tools like CryoSPARC)
+This function generates output in the form of .star file which can be utilized in tools like CryoSPARC for further steps like selecting the 2D classes, 3D reconstruction and so on.
+```
+python generate_starfile.py --empiar_id 10081 --file_name 10081.star
+```
+```
+Optional Arguments:
+  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
+  --file_name (str, default="10081.star): Filename for picked proteins coordinates.
+```
+#### Prediction on Test Data (predict proteins on micrographs)
+This function outputs micrographs with predicted proteins represented by circles.
+```
+python predict.py --empiar_id 10081
+```
+```
+Optional Arguments:
+  --test_dataset_path (str, default: "test_dataset"): Path to the test dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --empiar_id (str, default: "10081"): EMPIAR ID for prediction. 
+```
+
+## Training (if required)
+
+```
+python train.py
+```
+```
+Optional Arguments:
+  --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --pin_memory (flag): Enable pin_memory for data loading if using CUDA.
+  --num_workers (int, default: 8): Number of data loading workers.
+  --num_channels (int, default: 1): Number of input channels.
+  --num_classes (int, default: 1): Number of classes.
+  --num_levels (int, default: 3): Number of levels in the model.
+  --learning_rate (float, default: 0.0001): Learning rate.
+  --num_epochs (int, default: 200): Number of training epochs.
+  --batch_size (int, default: 6): Batch size.
+  --input_image_width (int, default: 1024): Input image width.
+  --input_image_height (int, default: 1024): Input image height.
+  --input_shape (int, default: 1024): Input image shape.
+  --logging (flag): Enable logging for wandb.
+  --architecture_name : Model architecture name.
+
+Example Usage:
+    python train.py --batch_size 12 --learning_rate 0.001 --num_epochs 10 --architecture_name "my_custom_model"
 ```
 -----
 
