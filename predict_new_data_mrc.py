@@ -57,7 +57,7 @@ def prepare_plot(image, predicted_mask, sam_mask, coords, image_path):
     plt.title('Final Picked Particles', fontsize=14)
     plt.imshow(coords, cmap='gray')
     path = image_path.split("/")[-1]
-    path = path.replace(".jpg", "_result.jpg")
+    path = path.replace(".mrc", "_result.jpg")
     #plt.savefig(os.path.join(f"{config.output_path}/results/", path))
     final_path = os.path.join(f"{config.output_path}/results/", f'predicted_{path}')
     cv2.imwrite(final_path, coords)
