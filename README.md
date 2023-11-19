@@ -107,7 +107,7 @@ If you have your own dataset available in .jpg format, place them under the dire
 ```
 python predict_new_data_jpg.py
 ```
-If you have your own dataset available in .mrc format, place them under the directory `my_dataset` and run:
+If you have your own dataset available with motion correction in .mrc format, place them under the directory `my_dataset` and run.
 ```
 python predict_new_data_mrc.py
 ```
@@ -117,6 +117,41 @@ Optional Arguments:
   --output_path (str, default: "output"): Output directory.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
 ```
+
+If you use the motion corrected dataset by CryoSPARC, place them under the directory `my_dataset` and remove the id appended in the beginning of filename for each micrographs.
+To remove the id appended in the beginning of each micrograph you may use the following command:
+```
+python remove_id.py
+```
+If Patch CTF Estimation job in CryoSPARC fails fails for some of your micrographs remove those micrographs from `my_dataset` folder and run:
+```
+python predict_new_data_mrc.py
+```
+```
+Optional Arguments:
+  --my_dataset_path (str, default: "my_dataset"): Path to your own dataset.
+  --output_path (str, default: "output"): Output directory.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+```
+
+After getting the star file you may use this file in CryoSPARC for further processing:
+
+### 1. Import Particles
+From the builder in CryoSPARC, select the `Import Particles` job to import the particles available in star file. This job expects:
+  - Inputs: Output of CTF Estimated Job
+  - Particle meta path: Path to star file output from CryoSegNet
+  - Remove leading UID in input micrograph file name: enabled
+
+![Alt text](<assets/import.png>) 
+
+### 2. Extract Mics.
+From the builder in CryoSPARC, select the `Extract Mics.` job to extract the particles.
+This job expects:
+  - Inputs: Output of Patch CTF job and Output of Import Particles job
+  - Extraction box size (pix): Box size in pixels, by default 256
+![Alt text](<assets/extract.png>) 
+
+After the particles are extracted with this job, you may run other jobs like `2D Class`, `Select 2D`, `Ab-Initio`, `Homo Refine`, etc depending upon your interest.
 
 ## Prediction on EMPIAR Test Data (available in directory test_dataset)
 
