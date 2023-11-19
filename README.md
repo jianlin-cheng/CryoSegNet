@@ -149,6 +149,7 @@ From the builder in CryoSPARC, select the `Extract Mics.` job to extract the par
 This job expects:
   - Inputs: Output of Patch CTF job and Output of Import Particles job
   - Extraction box size (pix): Box size in pixels, by default 256
+  
 ![Alt text](<assets/extract.png>) 
 
 After the particles are extracted with this job, you may run other jobs like `2D Class`, `Select 2D`, `Ab-Initio`, `Homo Refine`, etc depending upon your interest.
