@@ -1,7 +1,7 @@
 # Code for making predictions on individual micrographs
 
 import copy
-from utils.denoise import denoise
+from utils.denoise import denoise, denoise_jpg_image
 import config
 import matplotlib.pyplot as plt
 import numpy as np
@@ -78,6 +78,7 @@ def make_predictions(model, image_path):
         # image = image.T
         # image = np.rot90(image)
         image = cv2.imread(image_path, 0)
+        image = denoise_jpg_image(image)
         mask = cv2.imread(mask_path, 0)
         height, width = image.shape
         orig_image = copy.deepcopy(image)
