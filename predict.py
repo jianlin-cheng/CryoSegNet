@@ -78,7 +78,6 @@ def make_predictions(model, image_path):
         # image = image.T
         # image = np.rot90(image)
         image = cv2.imread(image_path, 0)
-        image = denoise_jpg_image(image)
         mask = cv2.imread(mask_path, 0)
         height, width = image.shape
         orig_image = copy.deepcopy(image)
