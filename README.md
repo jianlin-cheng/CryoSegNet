@@ -228,7 +228,7 @@ Run:
 ```
 python utils/generate_masks.py
 ```
-    You need to input the diameter size of protein in pixel value.
+You need to input the diameter size of protein in pixel value.
 
 5. Finetune the CryoSegNet Model
 ```
