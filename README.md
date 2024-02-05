@@ -247,6 +247,7 @@ Optional Arguments:
 
 ## Evaluation
 
+Find the Precision, Recall, F1-Score and Dice Score
 ```
 curl https://calla.rnet.missouri.edu/CryoSegNet/Evaluation/Groundtruth.tar.gz --output Evaluation/Groundtruth.tar.gz
 curl https://calla.rnet.missouri.edu/CryoSegNet/Evaluation/General.tar.gz --output Evaluation/General.tar.gz
@@ -254,6 +255,8 @@ tar -xvf Evaluation/Groundtruth.tar.gz -C Evaluation/
 tar -xvf Evaluation/General.tar.gz -C Evaluation/
 rm Evaluation/Groundtruth.tar.gz
 rm Evaluation/General.tar.gz
+```
+```
 python utils/precision_recall.py --test_dataset_path Evaluation/Groundtruth
 ```
 -----
