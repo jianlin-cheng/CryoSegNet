@@ -83,7 +83,7 @@ def evaluation(model, images_path, empiar_id, threshold=0.1):
 
 
     print("\n\n")
-    print(f"Evaluation Results for EMPIAR ID {empiar_id} at threshold = {threshold}")
+    print(f"Evaluation Results for EMPIAR ID {empiar_id}")
     print("Precision", precision)
     print("Recall", recall)
     print("F1-Score", f1_score)

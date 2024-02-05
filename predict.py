@@ -61,8 +61,7 @@ def prepare_plot(image, mask, predicted_mask, sam_mask, coords, image_path):
     plt.imshow(coords, cmap='gray')
     path = image_path.split("/")[-1]
     path = path.replace(".jpg", "_result.jpg")
-    plt.savefig(os.path.join(f"{config.output_path}/results/", path))
-    final_path = os.path.join(f"{config.output_path}/results/", f'predicted_{path}')
+    final_path = os.path.join(f"{config.output_path}/results/", f'{path}')
     cv2.imwrite(final_path, coords)
 
 

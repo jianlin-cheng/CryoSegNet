@@ -17,7 +17,6 @@ from tqdm import tqdm
 import time
 from datetime import datetime, date
 import os
-import wandb
 # load the image
 
 
@@ -57,23 +56,7 @@ print(f"[INFO] Number of Validation Steps : {val_steps}")
 
 # initialize a dictionary to store training history
 H = {"train_loss": [], "val_loss": [], "train_dice_score": [], "val_dice_score": [], "train_jaccard_score": [], "val_jaccard_score": [], "epochs": []}
-
-if config.logging:
-    # start a new wandb run to track this script
-    wandb.init(
-        # set the wandb project where this run will be logged
-        project="CryoEM-Model", name = config.architecture_name + " Date: " + str(datetime.today()),
-        
-        # track hyperparameters and run metadata
-        config={
-        "learning_rate": config.learning_rate,
-        "architecture": config.architecture_name,
-        "dataset": "Cryo EM Particle Picking Dataset",
-        "epochs": config.num_epochs,
-        }
-    )
-
-
+best_val_loss = float("inf")
 # loop over epochs
 print("[INFO] Training the network...")
 start_time = time.time()
@@ -149,17 +132,17 @@ for e in tqdm(range(config.num_epochs)):
     
     # print the model training and validation information
     print("[INFO] EPOCH: {}/{}".format(e + 1, config.num_epochs))
-    print("Train Loss: {:.4f}, Validation Loss: {:.4f}, Train Dice Score: {:.4f}. Validation Dice Score: {:.4f}, Train Jaccard Score: {:.4f}. Validation Jaccard Score: {:.4f}".format(
-    train_loss, val_loss, train_dice_score, val_dice_score, train_jaccard_score, val_jaccard_score))
-    
-    if config.logging:
-        wandb.log({"train_loss": train_loss, "val_loss": val_loss, "train_dice_score": train_dice_score, "val_dice_score": val_dice_score, 
-                "train_jaccard_score": train_jaccard_score, "val_jaccard_score": val_jaccard_score})
+    print("Train Loss: {:.4f}, Validation Loss: {:.4f}, Train Dice Score: {:.4f}. Validation Dice Score: {:.4f}".format(
+    train_loss, val_loss, train_dice_score, val_dice_score))
     
     # serialize the model to disk
     if e % 5 == 0:
         MODEL_PATH = config.architecture_name + " Epochs: {}, Date: {}.pth".format(e, date.today())
         torch.save(model.state_dict(), os.path.join(f"{config.output_path}/models/", MODEL_PATH))
+        
+    if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), os.path.join(f"{config.output_path}/models/", "cryosegnet_best_val_loss.pth"))
 
 # display the total time needed to perform the training
 end_time = time.time()

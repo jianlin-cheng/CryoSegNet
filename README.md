@@ -210,6 +210,54 @@ Example Usage:
 ```
 -----
 
+## Finetuning on your own dataset
+
+1. You need a star file to have coordinates of proteins picked manually. Refer to finetune_dataset/sample.star and make your star file in the same format
+
+2. Place all .mrc files inside finetune_dataset/mrc_files/ directory
+
+3. Denoise all the .mrc files and they will be stored inside finetune_dataset/images/ directory
+
+Run: 
+```
+python utils/generate_jpg.py
+```
+4. Generate masks for images. Masks will be stored inside finetune_dataset/masks/ directory
+    
+Run: 
+```
+python utils/generate_masks.py
+```
+    You need to input the diameter size of protein in pixel value.
+```
+5. Finetune the CryoSegNet Model
+```
+python finetune.py --train_dataset_path finetune_dataset
+```
+```
+Optional Arguments:
+  --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
+  --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
+  --pin_memory (flag): Enable pin_memory for data loading if using CUDA.
+  --num_workers (int, default: 8): Number of data loading workers.
+  --num_epochs (int, default: 200): Number of training epochs.
+  --batch_size (int, default: 6): Batch size.
+```
+-----
+
+## Evaluation
+
+```
+curl https://calla.rnet.missouri.edu/CryoSegNet/Evaluation/Groundtruth.tar.gz --output Evaluation/Groundtruth.tar.gz
+curl https://calla.rnet.missouri.edu/CryoSegNet/Evaluation/General.tar.gz --output Evaluation/General.tar.gz
+tar -xvf Evaluation/Groundtruth.tar.gz -C Evaluation/
+tar -xvf Evaluation/General.tar.gz -C Evaluation/
+rm Evaluation/Groundtruth.tar.gz
+rm Evaluation/General.tar.gz
+python utils/precision_recall.py --test_dataset_path Evaluation/Groundtruth
+```
+-----
+
 ## Rights and Permissions
 Open Access \
 This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.

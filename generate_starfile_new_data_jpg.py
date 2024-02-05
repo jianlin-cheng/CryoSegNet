@@ -93,10 +93,9 @@ def generate_output(model, image_path, star_writer):
                 if box[2] < x_ + th and box[2] > x_ - th/3 and box[3] < y_ + th and box[3] > y_ - th/3:                 
                     x_new, y_new = int((box[0] + box[2]/2) / config.input_image_width * width) , int((box[1] + box[3]/2) / config.input_image_height * height)
                     star_writer.writerow([filename, x_new, y_new, 2*r_]) 
-                    if iou > 0.99:
-                        star_writer.writerow([filename, x_new + random.randint(0, int(th/2)), y_new + random.randint(0, int(th/2)), 2*r_])   
-                        star_writer.writerow([filename, x_new + random.randint(-int(th/2), 0), y_new + random.randint(-int(th/2), 0), 2*r_])            
-                                                                                                                                                                     
+                    if iou > 0.9999:
+                        star_writer.writerow([filename, x_new + random.randint(-int(r_ / 10), int(r_ / 10)), y_new + random.randint(-int(r_ / 10), int(r_ / 10)), 2*r_])   
+                                                                                                                                                                    
         else:
             pass
         
