@@ -212,17 +212,17 @@ Example Usage:
 
 ## Finetuning on your own dataset
 
-1. You need a star file to have coordinates of proteins picked manually. Refer to finetune_dataset/sample.star and make your star file in the same format
+1. You need a star file to have coordinates of proteins picked manually. Refer to `finetune_dataset/sample.star` and make your star file in the same format
 
-2. Place all .mrc files inside finetune_dataset/mrc_files/ directory
+2. Place all .mrc files inside `finetune_dataset/mrc_files/` directory
 
-3. Denoise all the .mrc files and they will be stored inside finetune_dataset/images/ directory
+3. Denoise all the .mrc files and they will be stored inside `finetune_dataset/images/` directory
 
 Run: 
 ```
 python utils/generate_jpg.py
 ```
-4. Generate masks for images. Masks will be stored inside finetune_dataset/masks/ directory
+4. Generate masks for images. Masks will be stored inside `finetune_dataset/masks/` directory
     
 Run: 
 ```
