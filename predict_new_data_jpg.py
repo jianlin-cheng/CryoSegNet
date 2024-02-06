@@ -57,6 +57,7 @@ def prepare_plot(image, predicted_mask, sam_mask, coords, image_path):
     plt.title('Final Picked Particles', fontsize=14)
     plt.imshow(coords, cmap='gray')
     path = image_path.split("/")[-1]
+    path = path.replace(".png", "_result.png")
     path = path.replace(".jpg", "_result.jpg")
     final_path = os.path.join(f"{config.output_path}/results/", f'{path}')
     cv2.imwrite(final_path, coords)
@@ -68,11 +69,10 @@ def make_predictions(model, image_path):
     # set model to evaluation mode
     model.eval()
     with torch.no_grad():
-        # image = mrcfile.read(image_path)
-        # image = image.T
-        # image = np.rot90(image)
         image = cv2.imread(image_path, 0)
-        image = denoise_jpg_image(image)
+        
+        #Check if denoising makes difference or not! If the images are already denoised don't denoise them else denoise them!
+        # image = denoise_jpg_image(image)
         height, width = image.shape
         orig_image = copy.deepcopy(image)
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))    
@@ -123,7 +123,7 @@ def make_predictions(model, image_path):
             pass
         
 print("[INFO] Loading up test images path ...")
-images_path = list(glob.glob(f"{config.my_dataset_path}/*.jpg"))
+images_path = list(glob.glob(f"{config.my_dataset_path}/*.*p*g"))
 
 for i in range(0, len(images_path), 1):
 	make_predictions(model, images_path[i])
