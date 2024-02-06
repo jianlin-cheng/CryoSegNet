@@ -4,13 +4,14 @@ import mrcfile
 import cv2
 import glob
 import pandas as pd
+import config
 
 MRC_FILE_LOCATION = "finetune_dataset/mrc_files/"
 CSV_FILE_LOCATION = "finetune_dataset/csv_files/"
 MASK_FILE_LOCATION = "finetune_dataset/mask_files/"
 STAR_FILE_LOCATION = "finetune_dataset/sample.star"
 
-coordinates_ = pd.read_csv(f'{STAR_FILE_LOCATION}', skiprows = 6)
+coordinates_ = pd.read_csv(f'{config.file_name}', skiprows = 6) #Read Star File
 records = coordinates_["_rlnCoordinateY #3"]
 columns_names = ['Micrographs Filename', 'X-Coordinate', 'Y-Coordinate']
 df = pd.DataFrame()
@@ -71,8 +72,7 @@ for cf in coordinate_files:
             y = c['Y-Coordinate']
             r = int(c['Diameter']/2)
             coords = cv2.circle(mask, (x, y), r, (255, 255, 255), -1)
-        # cv2.imwrite(f"{MASK_FILE_LOCATION}{f_name}_mask.jpg", coords)
-        cv2.imwrite(f"finetune_dataset/sample_mask.jpg", coords)
+        cv2.imwrite(f"{MASK_FILE_LOCATION}{f_name}_mask.jpg", coords)
         print('Success')
     except:
         print('Error Creating Mask')

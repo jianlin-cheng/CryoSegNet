@@ -226,9 +226,10 @@ python utils/generate_jpg.py
     
 Run: 
 ```
-python utils/generate_masks.py
+python utils/generate_masks.py --file_name finetune_dataset/sample.star
 ```
 You need to input the diameter size of protein in pixel value.
+
 
 5. Finetune the CryoSegNet Model
 ```
@@ -236,7 +237,6 @@ python finetune.py --train_dataset_path finetune_dataset
 ```
 ```
 Optional Arguments:
-  --train_dataset_path (str, default: "train_dataset"): Path to the training dataset.
   --device (str, default: "cuda:0" if available, else "cpu"): Device for training (cuda:0 or cpu).
   --pin_memory (flag): Enable pin_memory for data loading if using CUDA.
   --num_workers (int, default: 8): Number of data loading workers.
