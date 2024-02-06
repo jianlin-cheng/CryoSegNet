@@ -76,23 +76,22 @@ def evaluation(model, images_path, empiar_id, threshold=0.1):
         total_recalls.append(recall)
         total_dice_scores.append(dice_score)
         
-    precision = np.max(total_precisions, axis = 0)
-    recall = np.max(total_recalls, axis = 0)  
-    f1_score = (2 * precision * recall) / (precision + recall)
-    dice_score = np.max(total_dice_scores, axis = 0) 
-
-
-    print("\n\n")
-    print(f"Evaluation Results for EMPIAR ID {empiar_id}")
-    print("Precision", precision)
-    print("Recall", recall)
-    print("F1-Score", f1_score)
-    print("Dice Score", dice_score)
-    print("\n\n")
+    precision = np.round(np.max(total_precisions, axis = 0), 3)
+    recall = np.round(np.max(total_recalls, axis = 0), 3)  
+    f1_score = np.round((2 * precision * recall) / (precision + recall), 3)
+    dice_score = np.round(np.max(total_dice_scores, axis = 0), 3) 
+    
+    print("\tPrecision", precision)
+    print("\tRecall", recall)
+    print("\tF1-Score", f1_score)
+    print("\tDice Score", dice_score)
     
 
 empiar_ids = [10028, 10081, 10345, 11056, 10532, 10093, 10017]
+print("[INFO] Loading up test images path ...")
 for empiar_id in empiar_ids:
-    print("[INFO] Loading up test images path ...")
     images_path = list(glob.glob(f"{config.test_dataset_path}/{empiar_id}/images/*.jpg"))
+    print("\n")
+    print(f"Evaluation Results for EMPIAR ID {empiar_id}")
     evaluation(model, images_path, empiar_id)
+    print(f"--------------------------------------")
