@@ -56,3 +56,31 @@ class CryoEMDataset(Dataset):
         mask = mask/255.0
 
         return (image, mask)
+    
+class CryoEMFineTuneDataset(Dataset):
+    def __init__(self, mask_dir, transform):
+        super().__init__()
+        self.mask_dir = mask_dir
+        self.transform = transform
+
+    def __len__(self):
+        return len(self.mask_dir)
+
+    def __getitem__(self, idx):        
+        mask_path = self.mask_dir[idx]
+        image_path = mask_path[:-9] + '.jpg'
+        image_path = image_path.replace('masks', 'images')
+        #image = denoise(image_path)
+        image = cv2.imread(image_path, 0)
+        mask = cv2.imread(mask_path, 0)
+        
+        image = cv2.resize(image, (config.input_image_width, config.input_image_height))
+        mask = cv2.resize(mask, (config.input_image_width, config.input_image_height))
+        
+        image = torch.from_numpy(image).unsqueeze(0).float()
+        mask = torch.from_numpy(mask).unsqueeze(0).float()
+        
+        image = image/255.0
+        mask = mask/255.0
+
+        return (image, mask)

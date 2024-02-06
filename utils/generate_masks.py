@@ -8,7 +8,7 @@ import config
 
 MRC_FILE_LOCATION = "finetune_dataset/mrc_files/"
 CSV_FILE_LOCATION = "finetune_dataset/csv_files/"
-MASK_FILE_LOCATION = "finetune_dataset/mask_files/"
+MASK_FILE_LOCATION = "finetune_dataset/masks/"
 STAR_FILE_LOCATION = "finetune_dataset/sample.star"
 
 coordinates_ = pd.read_csv(f'{config.file_name}', skiprows = 6) #Read Star File

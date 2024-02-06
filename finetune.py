@@ -140,7 +140,7 @@ for e in tqdm(range(config.num_epochs)):
     
     # serialize the model to disk
     if e %2 == 0:
-        MODEL_PATH = "Finetuned model Date: {}.pth".format(date.today())
+        MODEL_PATH = "Finetuned model Date: {}, Epochs: {}.pth".format(date.today(), e + 1)
         torch.save(model.state_dict(), os.path.join(f"{config.output_path}/models/", MODEL_PATH))
         
     if val_loss < best_val_loss:

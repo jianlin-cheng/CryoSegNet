@@ -233,7 +233,7 @@ You need to input the diameter size of protein in pixel value.
 
 5. Finetune the CryoSegNet Model
 ```
-python finetune.py --train_dataset_path finetune_dataset
+python finetune.py --train_dataset_path finetune_dataset/
 ```
 ```
 Optional Arguments:
