@@ -183,7 +183,6 @@ Optional Arguments:
 ```
 
 ## Training (if required)
-
 ```
 python train.py
 ```
