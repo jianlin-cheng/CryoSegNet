@@ -72,7 +72,7 @@ def make_predictions(model, image_path):
         image = cv2.imread(image_path, 0)
         
         #Check if denoising makes difference or not! If the images are already denoised don't denoise them else denoise them!
-        # image = denoise_jpg_image(image)
+        image = denoise_jpg_image(image)
         height, width = image.shape
         orig_image = copy.deepcopy(image)
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))    

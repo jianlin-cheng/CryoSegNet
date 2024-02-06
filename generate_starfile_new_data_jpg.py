@@ -52,7 +52,7 @@ def generate_output(model, image_path, star_writer):
         image = cv2.imread(image_path, 0)
         
         #Check if denoising makes difference or not! If the images are already denoised don't denoise them else denoise them!
-        # image = denoise_jpg_image(image)
+        image = denoise_jpg_image(image)
         height, width = image.shape
         image = cv2.resize(image, (config.input_image_width, config.input_image_height))
         
@@ -63,8 +63,10 @@ def generate_output(model, image_path, star_writer):
         predicted_mask = model(image)       
         predicted_mask = torch.sigmoid(predicted_mask)
         predicted_mask = predicted_mask.cpu().numpy().reshape(config.input_image_width, config.input_image_height)
-        predicted_mask = np.rot90(predicted_mask, k=3)
-        predicted_mask = predicted_mask.T
+        
+        # Uncomment these two lines if you find positions of predicted proteins are flipped
+        #predicted_mask = np.rot90(predicted_mask, k=3)
+        #predicted_mask = predicted_mask.T
                 
         sam_output = np.repeat(transform(predicted_mask)[:,:,None], 3, axis=-1)
         predicted_mask = cv2.resize(predicted_mask, (width, height))
