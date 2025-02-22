@@ -10,6 +10,7 @@ import shutil
 
 
 def generate_masks_for_evaluation(empiar_id):
+    print("[INFO] Generating masks from csv files for Evaluation ...")
     files = glob.glob(f"test_dataset/{empiar_id}/masks/*.jpg")
     
     destination_dir = f'Evaluation/CryoSegNet/{empiar_id}/masks/'
