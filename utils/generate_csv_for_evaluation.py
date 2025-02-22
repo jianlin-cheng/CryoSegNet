@@ -13,6 +13,7 @@ empiar_diameter_dict = dict(zip(empiar_ids, diameters))
         
         
 def generate_csv_for_evaluation(empiar_id, star_file):
+    print("[INFO] Generating csv files from star file for Evaluation ...")
     image = cv2.imread(glob.glob(f'test_dataset/{empiar_id}/images/*.jpg')[0])
     try:
         a, b, _ = image.shape
