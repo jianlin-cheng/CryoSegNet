@@ -8,10 +8,11 @@ sys.path.insert(0, parent_dir)
 import copy
 import config
 import numpy as np
-import torch
 import cv2
 import glob
-import config
+from utils.predict import predict
+from utils.generate_csv_for_evaluation import generate_csv_for_evaluation
+from utils.generate_masks_for_evaluation import generate_masks_for_evaluation
 
 
 def evaluation_metrics(gt_path, comparison_mask_path):
@@ -47,16 +48,15 @@ def evaluation(gt_path, model):
     
     for i in range(0, len(gt_path), 1):
         g_path = gt_path[i]
-        c_path = g_path.replace("Groundtruth", f"General/{model}")
-        
+        c_path = g_path.replace("test_dataset", f"Evaluation/{model}")        
+        print(g_path, c_path)
         try:
             precision, recall, dice_score = evaluation_metrics(g_path, c_path)
+            total_precisions.append(precision)
+            total_recalls.append(recall)
+            total_dice_scores.append(dice_score)
         except:
             pass
-        
-        total_precisions.append(precision)
-        total_recalls.append(recall)
-        total_dice_scores.append(dice_score)
        
     precision = np.round(np.max(total_precisions, axis = 0), 3)
     recall = np.round(np.max(total_recalls, axis = 0), 3)
@@ -71,13 +71,14 @@ def evaluation(gt_path, model):
     print("\tDice Score", dice_score)
     
 
-empiar_ids = [10028, 10081, 10345, 11056, 10532, 10093, 10017]
-print("[INFO] Loading up test images path ...")
-for empiar_id in empiar_ids:
-    gt_path = list(glob.glob(f"{config.test_dataset_path}/{empiar_id}/masks/*.jpg"))[20:]
+def precision_recall():
+    star_file = predict(config.test_dataset_path, config.empiar_id)
+    generate_csv_for_evaluation(config.empiar_id, star_file)
+    generate_masks_for_evaluation(config.empiar_id)
+    gt_path = list(glob.glob(f"{config.test_dataset_path}/{config.empiar_id}/masks/*.jpg"))[20:]
     print("\n")
-    print(f"Evaluation Results for EMPIAR ID {empiar_id}")
-    evaluation(gt_path, model = "CrYOLO")
-    evaluation(gt_path, model = "Topaz")
+    print(f"Evaluation Results for EMPIAR ID {config.empiar_id}")
     evaluation(gt_path, model = "CryoSegNet")
     print(f"--------------------------------------")
+    
+precision_recall()
