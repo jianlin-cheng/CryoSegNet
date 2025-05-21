@@ -15,6 +15,7 @@ def transform(image):
 
 
 def standard_scaler(image):
+    image = image.astype(np.float32)
     kernel_size = 9
     image = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)
     mu = np.mean(image)
