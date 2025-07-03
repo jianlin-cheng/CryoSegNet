@@ -279,5 +279,4 @@ If you use the code or data associated with this research work or otherwise find
     month = {06}, \
     issn = {1477-4054}, \
     doi = {10.1093/bib/bbae282}, \
-    url = {https://doi.org/10.1093/bib/bbae282}, \
 }
