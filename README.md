@@ -268,8 +268,16 @@ This article is licensed under a Creative Commons Attribution 4.0 International 
 
 ## Cite this work
 If you use the code or data associated with this research work or otherwise find this data useful, please cite: \
-@article {Gyawali2023, \
-	author = {Gyawali, Rajan and Dhakal, Ashwin and Wang, Liguo and Cheng, Jianlin}, \
-	title = {Accurate cryo-EM protein particle picking by integrating the foundational AI image segmentation model and specialized U-Net }, \
-    year = {2023}
+@article{10.1093/bib/bbae282, \
+    author = {Gyawali, Rajan and Dhakal, Ashwin and Wang, Liguo and Cheng, Jianlin}, \
+    title = {CryoSegNet: accurate cryo-EM protein particle picking by integrating the foundational AI image segmentation model and attention-gated U-Net}, \
+    journal = {Briefings in Bioinformatics}, \
+    volume = {25}, \
+    number = {4}, \
+    pages = {bbae282}, \
+    year = {2024}, \
+    month = {06}, \
+    issn = {1477-4054}, \
+    doi = {10.1093/bib/bbae282}, \
+    url = {https://doi.org/10.1093/bib/bbae282}, \
 }
