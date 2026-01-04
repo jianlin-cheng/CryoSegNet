@@ -27,6 +27,8 @@ for i in range(len(records)):
         values = records[i].split("\t")
     except:
         values = records[i].split(" ")
+    if len(values) == 1:
+        values = values[0].split()
     micrograph_filename.append(values[0])
     x_coordinate.append(int(float(values[1])))
     y_coordinate.append(int(float(values[2])))
