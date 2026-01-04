@@ -124,3 +124,4 @@ dependencies:
       - smmap==5.0.0
       - tqdm==4.64.1
       - wandb==0.13.10
+      - pandas==2.0.3
