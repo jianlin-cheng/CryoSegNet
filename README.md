@@ -233,9 +233,9 @@ If you have a star file generated from CryoSPARC:
 ```
 python utils/generate_masks_sample2.py --file_name finetune_dataset/sample2.star
 ```
-*If this doesnot work, modify the utils/generate_masks_sample2.py depending on your star file. The star file format may be different than the one shown in sample2.star. Modifying the code is straightforward and instructions are provided as comments in the python file.
+***If this doesnot work, modify the utils/generate_masks_sample2.py depending on your star file. The star file format may be different than the one shown in sample2.star. Modifying the code is straightforward and instructions are provided as comments in the python file.***
 
-After generating masks, please check one of the mask file, make sure they are exactly in the same orientation w.r.t. input micrograph and the correct mask has been prepared.*
+***After generating masks, please check one of the mask file, make sure they are exactly in the same orientation w.r.t. input micrograph and the correct mask has been prepared.***
 
 5. Finetune the CryoSegNet Model
 ```
